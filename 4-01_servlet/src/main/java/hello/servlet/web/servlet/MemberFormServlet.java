@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+//서블릿으로 회원 관리 웹 애플리케이션 만들기 - 회원 등록 폼
 
+//회원 정보를 입력할 수 있는 HTML Form을 만들어서 응답하는 서블릿
+//=> [실행] : http://localhost:8080/servlet/members/new-form
 @WebServlet(name = "memberFormServlet", urlPatterns = "/servlet/members/new-form")
 public class MemberFormServlet extends HttpServlet {
 
