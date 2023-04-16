@@ -18,10 +18,9 @@ import java.io.IOException;
 
 //프론트 컨트롤러 도입 - v1
 //V1 구조
-// => 서블릿과 비슷한 모양의 컨트롤러 인터페이스를 도입한다.
-// => 각 컨트롤러들은 이 인터페이스를 구현하면 된다.
-// => 프론트 컨트롤러는 이 인터페이스를 호출해서 구현과 관계없이 로직의 일관성을 가져갈 수 있다.
-// => 이제 이 인터페이스를 구현한 컨트롤러를 만들어보자. 지금 단계에서는 기존 로직을 최대한 유지하는게 핵심이다. - FrontControllerServletV1.java
+// => 서블릿과 비슷한 모양의 컨트롤러 인터페이스 생성 - ControllerV1
+// => 각 컨트롤러들은 이 인터페이스를 상속받아 작성 - MemberFormControllerV1, MemberSaveControllerV1 , MemberListControllerV1
+// => 프론트 컨트롤러는 인터페이스(ControllerV1)를 호출해서 구현과 관계없이 로직의 일관성 제공 - FrontControllerServletV1
 public interface ControllerV1 {
 
     void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
