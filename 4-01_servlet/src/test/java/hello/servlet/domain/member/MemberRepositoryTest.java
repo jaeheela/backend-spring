@@ -8,6 +8,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
+//회원 저장소 테스트 코드
+// => 회원을 저장하고, 목록을 조회하는 테스트를 작성했다.
+// => 각 테스트가 끝날 때, 다음 테스트에 영향을 주지 않도록 각 테스트의 저장소를 clearStore() 를 호출해서 초기화했다.
 class MemberRepositoryTest {
 
     MemberRepository memberRepository = MemberRepository.getInstance();
