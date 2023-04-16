@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--회원 등록 폼 - 뷰--%>
 <html>
 <head>
     <meta charset="UTF-8">

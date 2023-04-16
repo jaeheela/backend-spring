@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--회원 저장 - 뷰--%>
 <html>
 <head>
     <title>Title</title>
