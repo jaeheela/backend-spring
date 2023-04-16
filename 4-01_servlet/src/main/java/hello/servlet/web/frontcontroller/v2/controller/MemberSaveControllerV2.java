@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+// 회원 저장
 public class MemberSaveControllerV2 implements ControllerV2 {
 
     private MemberRepository memberRepository = MemberRepository.getInstance();

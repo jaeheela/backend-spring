@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
+//프론트 컨트롤러 V2
+// => [등록 실행] : http://localhost:8080/front-controller/v2/members/new-form
+// => [목록 실행] : http://localhost:8080/front-controller/v2/members
 @WebServlet(name = "frontControllerServletV2", urlPatterns = "/front-controller/v2/*")
 public class FrontControllerServletV2 extends HttpServlet {
 
