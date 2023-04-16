@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+// 회원 등록 컨트롤러 - 내부 로직은 기존 서블릿과 거의 같음
 public class MemberFormControllerV1 implements ControllerV1 {
 
     @Override

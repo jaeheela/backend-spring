@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-
+//회원 목록 컨트롤러 - 내부 로직은 기존 서블릿과 거의 같음
 public class MemberListControllerV1 implements ControllerV1 {
 
     private MemberRepository memberRepository = MemberRepository.getInstance();
