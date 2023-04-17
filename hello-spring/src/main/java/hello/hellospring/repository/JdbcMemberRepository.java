@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-// 순수 Jdbc를 이용한 회원 리포지토리
+// 순수 Jdbc 이용 - 회원 리포지토리
 // => 주의! 이렇게 JDBC API로 직접 코딩하는 것은 20년 전 이야기이다.
 // => 따라서 고대 개발자들이 이렇게 고생하고 살았구나 생각하고, 정신건강을 위해 참고만 하고 넘어가자.
 
@@ -16,6 +16,7 @@ import java.util.Optional;
 // => 회원을 등록하고 DB에 결과가 잘 입력되는지 확인하자. 데이터를 DB에 저장하므로 스프링 서버를 다시 실행해도 데이터가 안전하게 저장된다.
 // => JdbcMemberRepository implements MemberRepository로 확장
 public class JdbcMemberRepository implements MemberRepository {
+    //필드
     private final DataSource dataSource;
     //생성자
     public JdbcMemberRepository(DataSource dataSource) {

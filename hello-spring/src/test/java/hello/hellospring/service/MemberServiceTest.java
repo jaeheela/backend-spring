@@ -6,13 +6,12 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-
+//단위테스트 - 스프링 컨테이너 없이 순수한 자바로만 테스트 진행 - 실행속도가 빠름, 작성할 수 있으면 하기
+//=> 통합테스트를 자주 하는 것 보다는 단위테스트를 잘 만드는 것이 훨씬 더 좋음
 class MemberServiceTest {
 
     //MemberService memberService = new MemberService();

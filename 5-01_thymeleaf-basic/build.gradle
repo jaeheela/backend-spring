@@ -1,15 +1,19 @@
+//스프링 MVC 2편 - 백엔드 웹 개발 활용 기술 - 5
+//1. 타임리프 - 기본 기능
+//2. 타임리프 - 스프링 통합과 폼 3. 메시지, 국제화
+//4. 검증1 - Validation
+//5. 검증2 - Bean Validation
+//6. 로그인 처리1 - 쿠키, 세션
+//7. 로그인 처리2 - 필터, 인터셉터 8. 예외 처리와 오류 페이지
+//9. API 예외 처리
+//10. 스프링 타입 컨버터
+//11. 파일 업로드
+
+
 //프로젝트 생성
 //사전 준비물 : Java 11 설치 , IDE: IntelliJ 또는 Eclipse 설치
 //스프링 부트 스타터 사이트로 이동해서 스프링 프로젝트 생성 : https://start.spring.io
-//프로젝트 선택 : Project: Gradle >>  Groovy Project Language: Java >>
-//
-// Spring Boot: 2.5.x Project Metadata
-//Group: hello
-//Artifact: thymeleaf-basic
-//Name: thymeleaf-basic
-//Package name: hello.thymeleaf Packaging: Jar
-//Java: 11
-//주의: 강의 영상에서 package 선택시 War라고 잘못 이야기했는데, Jar가 맞습니다. Dependencies: Spring Web, Lombok , Thymeleaf
+//프로젝트 선택 : Project: Gradle >>  Groovy Project Language: Java >> Spring Boot: 2.5.x >> Project Metadata - Group: hello , Artifact: thymeleaf-basic >> Name: thymeleaf-basic >> Package name: hello.thymeleaf >> Packaging: Jar >> Java: 11 >> Dependencies: Spring Web, Lombok , Thymeleaf
 //주의! - 스프링 부트 3.0
 //스프링 부트 3.0을 선택하게 되면 다음 부분을 꼭 확인해주세요.
 plugins {
