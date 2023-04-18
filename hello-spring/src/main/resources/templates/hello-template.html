@@ -1,0 +1,9 @@
+<!--MVC와 템플릿 엔진-->
+<!--MVC: [Model] , [View - hello-template.html] , [Controller - HelloController의 hello(Model model) 요청처리메소드] -->
+<!-- http://localhost:8080/hello-mvc?name=spring -->
+<!--[View] 역할 -->
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<p th:text="'hello ' + ${name}">hello! empty</p>
+</body>
+</html>
