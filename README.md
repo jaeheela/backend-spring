@@ -7,7 +7,7 @@
 ### 4. web-core
 - [servlet]: HttpServletRequest, HttpServletResponse >> servlet >> mvc(jsp+servlet) >> mvc pattern >> springmvc
 - [springmvc]: 
-- [item-service]: 
+- [item-service]: spring boot, spring mvc, thymeleaf, lombok, No database
 ### 5. web-advanced
 - [thymeleaf]: spring boot, springmvc, thymemleaf, lombok
 - [form]: 

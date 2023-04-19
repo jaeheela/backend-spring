@@ -40,6 +40,13 @@
 -- spring.datasource.url=jdbc:h2:tcp://localhost/~/test -- [JDBC URL]
 -- spring.datasource.driver-class-name=org.h2.Driver -- [드라이버 클래스]
 -- spring.datasource.username=sa -- [사용자명]
+
+-- spring.jpa.show-sql=true
+-- spring.jpa.hibernate.ddl-auto=none
+-- ##spring.jpa.hibernate.ddl-auto=create
+-- [show-sql] : JPA가 생성하는 SQL을 출력한다.
+-- ddl-auto : JPA는 테이블을 자동으로 생성하는 기능을 제공하는데 none 를 사용하면 해당 기능을 끈다.
+-- create 를 사용하면 엔티티 정보를 바탕으로 테이블도 직접 생성해준다. 해보자.
 -- 주의) 스프링부트 2.4부터는 spring.datasource.username=sa 를 꼭 추가해주어야 한다. 그렇지 않으면 Wrong user name or password 오류가 발생한다.
 -- => 참고로 다음과 같이 마지막에 공백이 들어가면 같은 오류가 발생한다. spring.datasource.username=sa 공백 주의, 공백은 모두 제거해야 한다.
 -- => 인텔리J 커뮤니티(무료) 버전의 경우 application.properties 파일의 왼쪽이 다음 그림고 같이 회색으로 나온다. 엔터프라이즈(유료) 버전에서 제공하는 스프링의 소스 코드를 연결해주는 편의 기능이 빠진 것인데, 실제 동작하는데는 아무런 문제가 없다.
