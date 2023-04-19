@@ -1,3 +1,4 @@
+//스프링 DB 2편 - 데이터 접근 활용 기술 - 7
 //1. 데이터 접근 기술 - itemservice-db
 // => 시작 : 데이터 접근 기술 진행 방식 소개, 프로젝트 설정, 메모리 저장소, 프로젝트 구조 설명(기본, 설정,테스트), 데이터베이스 테이블 생성
 // => 스프링 JdbcTemplate : JdbcTemplate 소개, JdbcTemplate 설정, JdbcTemplate 기본, 동적 쿼리 문제, 구성과 실행, 이름 지정 파라미터, SimpleJdbcInsert
@@ -30,6 +31,7 @@
 // => 그래서 여러분이 필요할 때 해당 데이터 저장 기술을 스스로 학습할 수 있도록 돕는 것이 이번 장의 목표이다.
 // => 정리하면 이번 강의의 목표는 1.데이터 접근 기술에 대한 기본 이해와 전체 큰 그림을 그린다. 2.각 기술들의 핵심 기능 위주로 학습한다. 3.각 기술들을 점진적으로 도입하는 과정을 통해서 각 기술의 특징과 장단점을 자연스럽게 이해할 수 있다.
 // => 먼저 메모리 기반으로 완성되어 있는 프로젝트를 확인하고, 이 프로젝트에 데이터 접근 기술을 하나씩 추가해보자.
+
 //프로젝트 설정과 메모리 저장소
 // => 스프링 MVC 1편에서 마지막에 완성한 상품 관리 프로젝트를 떠올려보자. 이 프로젝트는 단순히 메모리에 상품 데이터를 저장하도록 되어 있었다.
 // => 여기에 메모리가 아닌 실제 데이터 접근 기술들을 하나씩 적용해가면서 각각의 데이터 접근 기술들을 어떻게 사용하는지, 장단점은 무엇인지 코드로 이해하고 학습해보자.
@@ -38,6 +40,7 @@
 // => ItemServiceApplication.main() 을 실행해서 프로젝트가 정상 수행되는지 확인
 // => 실행 : http://localhost:8080
 // => 참고: 해당 프로젝트는 데이터 접근 기술에 초점을 맞추기 위해 검증을 포함한 여러 기능이 빠져있다
+
 //프로젝트 구조 설명1 - 기본
 //제공되는 프로젝트에 대해서 하나씩 알아보자.
 //주의 - 스프링 부트 3.0을 선택하게 되면 다음 부분 꼭 확인 - https://bit.ly/springboot3 참고
@@ -45,6 +48,7 @@
 // => 오라클과 자바 라이센스 문제로 모든 javax 패키지를 jakarta로 변경하기로 했음
 // => 패키지 이름 변경의 예) javax.persistence.Entity->jakarta.persistence.Entity(JPA 애노테이션) ,  javax.annotation.PostConstruct -> jakarta.annotation.PostConstruct(@PostConstruct 애노테이션), javax.validation -> jakarta.validation(검증 애노테이션)
 // => H2 데이터베이스를 2.1.214 버전 이상 사용
+
 //프로필
 // => 스프링은 로딩 시점에 application.properties 의 spring.profiles.active 속성을 읽어서 프로필로 사용한다.
 // => 이 프로필은 로컬(나의 PC), 운영 환경, 테스트 실행 등등 다양한 환경에 따라서 다른 설정을 할 때 사용하는 정보이다.
@@ -68,6 +72,7 @@
 // => 프로필 기능 덕분에 테스트 케이스에서는 test 프로필이 실행된다. 따라서 TestDataInit는 스프링 빈으로 추가되지 않고, 따라서 초기 데이터도 추가되지 않는다.
 // => 참고로 프로필에 대한 스프링 부트 공식 메뉴얼은 다음을 참고하자 : https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.profiles
 // => 참고로 스프링 프로필에 대한 더 자세한 내용은 다음 출시 예정인 스프링 부트 강의에서 자세히 다룰 예정이다.
+
 //테스트 - 데이터베이스 연동해 테스트
 // => 테스트 케이스는 src/test 에 있기 때문에, 실행하면 src/test 에 있는 application.properties 파일이 우선순위를 가지고 실행된다.
 // => 그런데 문제는 테스트용 설정에는 spring.datasource.url 과 같은 데이터베이스 연결 설정이 없다는 점이다.
@@ -77,33 +82,34 @@
 //테스트 실행 - 로컬DB
 // => src/test/하위의 ItemRepositoryTest 테스트 코드를 확인해보자.
 
-//JdbcTemplate 소개와 설정
+//1. JdbcTemplate 소개와 설정
 // => SQL을 직접 사용하는 경우에 스프링이 제공하는 JdbcTemplate은 아주 좋은 선택지다.
 // => JdbcTemplate은 JDBC를 매우 편리하게 사용할 수 있게 도와준다.
 // => 장점 : 설정의 편리함 - JdbcTemplate은 spring-jdbc 라이브러리에 포함되어 있는데, 이 라이브러리는 스프링으로 JDBC를 사용할 때 기본으로 사용되는 라이브러리이다. 그리고 별도의 복잡한 설정 없이 바로 사용할 수 있다.
 // => 장점 : 반복 문제 해결 - JdbcTemplate은 템플릿 콜백 패턴을 사용해서, JDBC를 직접 사용할 때 발생하는 대부분의 반복 작업을 대신 처리해준다. 개발자는 SQL을 작성하고, 전달할 파리미터를 정의하고, 응답 값을 매핑하기만 하면 된다. 우리가 생각할 수 있는 대부분의 반복 작업을 대신 처리해준다.(커넥션 획득, statement 를 준비하고 실행, 결과를 반복하도록 루프를 실행, 커넥션 종료,statement,resultset종료, 트랜잭션 다루기 위한 커넥션 동기화, 예외 발생시 스프링 예외 변환기 실행)
 // => 단점 : 동적 SQL을 해결하기 어렵다.
-//JdbcTemplate 데이터베이스 접근 설정
+//2. JdbcTemplate 데이터베이스 접근 설정
 // => [src/main/resources/application.properties] : spring.profiles.active=local , spring.datasource.url=jdbc:h2:tcp://localhost/~/test , spring.datasource.username=sa
 // => 이렇게 설정만 하면 스프링 부트가 해당 설정을 사용해서 커넥션 풀과 DataSource , 트랜잭션 매니저를 스프링 빈으로 자동 등록한다. (앞에서 학습한 스프링 부트의 자동 리소스 등록 내용을 떠올려보자.)
 // => 주의! 여기서는 src/test 가 아니라 src/main 에 위치한 application.properties 파일을 수정해야 한다!
 // => 실행) 실제 DB에 연결해야 하므로 H2 데이터베이스 서버 먼저 실행 >> ItemServiceApplication.main() 실행해서 애플리케이션 서버 실행 >> 웹 브라우저로 http://localhost:8080 에 접속
 // => 실행해보면 잘 동작하는 것을 확인할 수 있다. 그리고 DB에 실제 데이터가 저장되는 것도 확인할 수 있다.
 // => 참고로 서버를 다시 시작할 때 마다 TestDataInit이 실행되기 때문에 itemA , itemB 도 데이터베이스에 계속 추가된다. 메모리와 다르게 서버가 내려가도 데이터베이스는 유지되기 때문이다.
-//JdbcTemplate 로그 추가
+//3. JdbcTemplate 로그 추가
 // => [src/main/resources/application.properties] : logging.level.org.springframework.jdbc=debug
 // => [src/test/resources/application.properties] : logging.level.org.springframework.jdbc=debug
 // => JdbcTemplate이 실행하는 SQL 로그를 확인하려면 application.properties 에 다음을 추가하면 된다.
 // => main , test 설정이 분리되어 있기 때문에 둘다 확인하려면 두 곳에 모두 추가해야 한다.
-//JdbcTemplate 주요 기능
+//4. JdbcTemplate 주요 기능
 // => JdbcTemplate :순서 기반 파라미터 바인딩을 지원한다.
 // => NamedParameterJdbcTemplate : 이름 기반 파라미터 바인딩을 지원한다. (권장)
 // => SimpleJdbcInsert : INSERT SQL을 편리하게 사용할 수 있다.
 // => SimpleJdbcCall : 스토어드 프로시저를 편리하게 호출할 수 있다.
 // => 참고로 스토어드 프로시저를 사용하기 위한 SimpleJdbcCall에 대한 자세한 내용은 다음 스프링 공식 메뉴얼을 참고하자. https://docs.spring.io/spring-framework/docs/current/reference/html/data-access.html#jdbc-simple-jdbc-call-1
-//JdbcTemplate 사용법 정리
+//5. JdbcTemplate 사용법 정리
 // => JdbcTemplate에 대한 사용법은 스프링 공식 메뉴얼에 자세히 소개되어 있다. 여기서는 스프링 공식 메뉴얼이 제공하는 예제를 통해 JdbcTemplate의 기능을 간단히 정리해보자.
 // => 스프링 JdbcTemplate 사용 방법 공식 메뉴얼 : https://docs.spring.io/spring-framework/docs/current/reference/html/data-access.html#jdbc-JdbcTemplate
+//6. JdbcTemplate 조회 기능
 //단건 조회 - 숫자 조회
 // => int rowCount = jdbcTemplate.queryForObject("select count(*) from t_actor",Integer.class);
 // => 하나의 로우를 조회할 때는 queryForObject() 를 사용하면 된다. 지금처럼 조회 대상이 객체가 아니라 단순 데이터 하나라면 타입을 Integer.class , String.class 와 같이 지정해주면 된다.
@@ -126,11 +132,13 @@
 // =>   Actor actor = new Actor(); actor.setFirstName(resultSet.getString("first_name")); actor.setLastName(resultSet.getString("last_name")); return actor;};
 // =>   public List<Actor> findAllActors() {return this.jdbcTemplate.query("select first_name, last_name from t_actor",actorRowMapper);}
 // => 여러 로우를 조회할 때는 query() 를 사용하면 된다. 결과를 리스트로 반환한다. 여기서는 RowMapper를 분리했다. 이렇게 하면 여러 곳에서 재사용 할 수 있다.
-//변경(INSERT, UPDATE, DELETE) : 데이터를 변경할 때는 jdbcTemplate.update()를 사용하면 된다. 참고로 int 반환값을 반환하는데, SQL 실행 결과에 영향받은 로우 수를 반환한다.
-//=> 등록 :jdbcTemplate.update("insert into t_actor (first_name, last_name) values (?, ?)","Leonor", "Watling");
-//=> 수정 :jdbcTemplate.update("update t_actor set last_name = ? where id = ?","Banjo", 5276L);
-//=> 삭제 : jdbcTemplate.update("delete from t_actor where id = ?",Long.valueOf(actorId));
-//기타 기능 : 임의의 SQL을 실행할 때는 execute() 를 사용하면 된다. 테이블을 생성하는 DDL에 사용할 수 있다.
+//7. JdbcTemplate 변경 기능(INSERT, UPDATE, DELETE)
+// => 데이터를 변경할 때는 jdbcTemplate.update()를 사용하면 된다. 참고로 int 반환값을 반환하는데, SQL 실행 결과에 영향받은 로우 수를 반환한다.
+// => 등록 :jdbcTemplate.update("insert into t_actor (first_name, last_name) values (?, ?)","Leonor", "Watling");
+// => 수정 :jdbcTemplate.update("update t_actor set last_name = ? where id = ?","Banjo", 5276L);
+// => 삭제 : jdbcTemplate.update("delete from t_actor where id = ?",Long.valueOf(actorId));
+//8. JdbcTemplate 기타 기능
+// => 임의의 SQL을 실행할 때는 execute() 를 사용하면 된다. 테이블을 생성하는 DDL에 사용할 수 있다.
 // => DDL : jdbcTemplate.execute("create table mytable (id integer, name varchar(100))");
 // => 스토어드 프로시저 호출 : jdbcTemplate.update("call SUPPORT.REFRESH_ACTORS_SUMMARY(?)",Long.valueOf(unionId));
 //정리
@@ -139,7 +147,7 @@
 // => 동적 쿼리 문제를 해결하면서 동시에 SQL도 편리하게 작성할 수 있게 도와주는 기술이 바로 MyBatis 이다.
 // => 참고로 JOOQ라는 기술도 동적쿼리 문제를 편리하게 해결해주지만 사용자가 많지 않아서 강의에서 다루지는 않는다
 
-//MyBatis 소개와 설정
+//1. MyBatis 소개와 설정
 // => MyBatis는 앞서 설명한 JdbcTemplate보다 더 많은 기능을 제공하는 SQL Mapper이다. 기본적으로 JdbcTemplate이 제공하는 대부분의 기능을 제공한다.
 // => JdbcTemplate과 비교해서 MyBatis의 가장 매력적인 점은 SQL을 XML에 편리하게 작성할 수 있고 또 동적 쿼리를 매우 편리하게 작성할 수 있다는 점이다.
 // => 먼저 SQL이 여러줄에 걸쳐 있을 때 둘을 비교해보자. MyBatis는 XML에 작성하기 때문에 라인이 길어져도 문자 더하기에 대한 불편함이 없다.
@@ -153,17 +161,18 @@
 // => 하지만 MyBatis를 선택했다면 그것으로 충분할 것이다.
 // => 참고로 강의에서는 MyBatis의 기능을 하나하나를 자세하게 다루지는 않는다. MyBatis를 왜 사용하는지, 그리고 주로 사용하는 기능 위주로 다룰 것이다.
 // => 그래도 이 강의를 듣고 나면 MyBatis로 개발을 할 수 있게 되고 추가로 필요한 내용을 공식 사이트에서 찾아서 사용할 수 있게 될 것이다.
-// => MyBatis는 기능도 단순하고 또 공식 사이트가 한글로 잘 번역되어 있어서 원하는 기능을 편리하게 찾아볼수 있다.
-// => MyBatis 공식 사이트 : https://mybatis.org/mybatis-3/ko/index.html
-// mybatis 데이터베이스 접근 설정 및 로그 추가
+// => MyBatis는 기능도 단순하고 또 공식 사이트가 한글로 잘 번역되어 있어서 원하는 기능을 편리하게 찾아볼수 있다. : https://mybatis.org/mybatis-3/ko/index.html
+
+//2. MyBatis 데이터베이스 접근 설정 및 로그 추가
 // => [application.properties] 에 다음 설정을 추가하자.
 // => [src/main/resources/application.properties] : mybatis.type-aliases-package=hello.itemservice.domain , mybatis.configuration.map-underscore-to-camel-case=true, logging.level.hello.itemservice.repository.mybatis=trace
 // => [src/test/resources/application.properties] : mybatis.type-aliases-package=hello.itemservice.domain , mybatis.configuration.map-underscore-to-camel-case=true, logging.level.hello.itemservice.repository.mybatis=trace
 // => 주의! 웹 애플리케이션을 실행하는 main , 테스트를 실행하는 test 각 위치의 application.properties를 모두 수정해주어야 한다.
-// => mybatis.type-aliases-package : 마이바티스에서 타입 정보를 사용할 때는 패키지 이름을 적어주어야 하는데, 여기에 명시하면 패키지 이름을 생략할 수 있다. 지정한 패키지와 그 하위 패키지가 자동으로 인식된다. 여러 위치를 지정하려면 ,, ;로 구분하면 된다.
-// => mybatis.configuration.map-underscore-to-camel-case : JdbcTemplate의 BeanPropertyRowMapper에서 처럼 언더바를 카멜로 자동 변경해주는 기능을 활성화 한다. 바로 다음에 설명하는 관례의 불일치 내용을 참고하자.
-// => logging.level.hello.itemservice.repository.mybatis=trace : MyBatis에서 실행되는 쿼리 로그를 확인할 수 있다.
-//관례의 불일치
+// => [mybatis.type-aliases-package] : 마이바티스에서 타입 정보를 사용할 때는 패키지 이름을 적어주어야 하는데, 여기에 명시하면 패키지 이름을 생략할 수 있다. 지정한 패키지와 그 하위 패키지가 자동으로 인식된다. 여러 위치를 지정하려면 ,, ;로 구분하면 된다.
+// => [mybatis.configuration.map-underscore-to-camel-case] : JdbcTemplate의 BeanPropertyRowMapper에서 처럼 언더바를 카멜로 자동 변경해주는 기능을 활성화 한다. 바로 다음에 설명하는 관례의 불일치 내용을 참고하자.
+// => [logging.level.hello.itemservice.repository.mybatis=trace] : MyBatis에서 실행되는 쿼리 로그를 확인할 수 있다.
+
+//2. MyBatis 관례의 불일치
 // => 자바 객체에는 주로 카멜( camelCase ) 표기법을 사용한다. itemName 처럼 중간에 낙타 봉이 올라와 있는 표기법이다.
 // => 반면에 관계형 데이터베이스에서는 주로 언더스코어를 사용하는 snake_case 표기법을 사용한다. item_name 처럼 중간에 언더스코어를 사용하는 표기법이다.
 // => 이렇게 관례로 많이 사용하다 보니 map-underscore-to-camel-case 기능을 활성화 하면 언더스코어 표기법을 카멜로 자동 변환해준다.
