@@ -95,8 +95,12 @@ public class SingletonTest {
     // => 무상태(stateless)로 설계해야 한다! 특정 클라이언트에 의존적인 필드가 있으면 안된다. 특정 클라이언트가 값을 변경할 수 있는 필드가 있으면 안된다!
     // => 가급적 읽기만 가능해야 한다. 필드 대신에 자바에서 공유되지 않는, 지역변수, 파라미터, ThreadLocal 등을 사용해야 한다.
     // => 스프링 빈의 필드에 공유 값을 설정하면 정말 큰 장애가 발생할 수 있다!!!
-    // => 상태를 유지할 경우 발생하는 문제점 예시 - StatefulService.java , StatefulServiceTest.java
-    // => 그런데 이상한점이 있다! 다음 AppConfig 코드를 보자. - @Configuration과 싱글톤
+    // => 상태를 유지할 경우 발생하는 문제점 : 예시 - StatefulService.java , StatefulServiceTest.java
+    // => 그런데 이상한점이 있다! 다음 AppConfig 코드를 보자. (@Configuration과 싱글톤)
+    // => memberService 빈을 만드는 코드를 보면 memberRepository() 를 호출한다. 이 메서드를 호출하면 new MemoryMemberRepository() 를 호출한다.
+    // => orderService 빈을 만드는 코드도 동일하게 memberRepository() 를 호출한다. 이 메서드를 호출하면 new MemoryMemberRepository() 를 호출한다.
+    // => 결과적으로 각각 다른 2개의 MemoryMemberRepository 가 생성되면서 싱글톤이 깨지는 것 처럼 보인다.
+    // => 스프링 컨테이너는 이 문제를 어떻게 해결할까? 직접 테스트 해보자.
     @Test
     @DisplayName("스프링 컨테이너와 싱글톤")
     void springContainer() {

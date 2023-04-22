@@ -11,39 +11,25 @@
 
 <h1>SpringEL 표현식</h1>
 <ul>Object
-    <li>${user.username} =    <span th:text="${user.username}"></span></li>
-    <li>${user['username']} = <span th:text="${user['username']}"></span></li>
-    <li>${user.getUsername()} = <span th:text="${user.getUsername()}"></span></li>
+    <li>${user.username} =    <span th:text="${user.username}"/></li>
+    <li>${user['username']} = <span th:text="${user['username']}"/></li>
+    <li>${user.getUsername()} = <span th:text="${user.getUsername()}"/></li>
 </ul>
-<!--Object-->
-<!--${user.username} = userA-->
-<!--${user['username']} = userA-->
-<!--${user.getUsername()} = userA-->
 <ul>List
-    <li>${users[0].username}    = <span th:text="${users[0].username}"></span></li>
-    <li>${users[0]['username']} = <span th:text="${users[0]['username']}"></span></li>
-    <li>${users[0].getUsername()} = <span th:text="${users[0].getUsername()}"></span></li>
+    <li>${users[0].username}    = <span th:text="${users[0].username}"/></li>
+    <li>${users[0]['username']} = <span th:text="${users[0]['username']}"/></li>
+    <li>${users[0].getUsername()} = <span th:text="${users[0].getUsername()}"/></li>
 </ul>
-<!--List-->
-<!--${users[0].username} = userA-->
-<!--${users[0]['username']} = userA-->
-<!--${users[0].getUsername()} = userA-->
 <ul>Map
-    <li>${userMap['userA'].username} =  <span th:text="${userMap['userA'].username}"></span></li>
-    <li>${userMap['userA']['username']} = <span th:text="${userMap['userA']['username']}"></span></li>
-    <li>${userMap['userA'].getUsername()} = <span th:text="${userMap['userA'].getUsername()}"></span></li>
+    <li>${userMap['userA'].username} =  <span th:text="${userMap['userA'].username}"/></li>
+    <li>${userMap['userA']['username']} = <span th:text="${userMap['userA']['username']}"/></li>
+    <li>${userMap['userA'].getUsername()} = <span th:text="${userMap['userA'].getUsername()}"/></li>
 
 </ul>
-<!--Map-->
-<!--${userMap['userA'].username} = userA-->
-<!--${userMap['userA']['username']} = userA-->
-<!--${userMap['userA'].getUsername()} = userA-->
 <h1>지역 변수 - (th:with)</h1>
 <div th:with="first=${users[0]}">
-    <p>처음 사람의 이름은 <span th:text="${first.username}"></span></p>
+    <p>처음 사람의 이름은 <span th:text="${first.username}"/></p>
 </div>
-<!--지역 변수 - (th:with)-->
-<!--처음 사람의 이름은 userA-->
 </body>
 </html>
 

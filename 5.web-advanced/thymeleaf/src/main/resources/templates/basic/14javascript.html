@@ -17,7 +17,7 @@
     //객체
     var user = [[${user}]];
 </script>
-<!--자바스크립트 인라인 사용 전 - 결과
+<!--/*자바스크립트 인라인 사용 전 - 결과
 <script>
     var username = userA;
     var age = 10;
@@ -26,7 +26,7 @@
     //객체
     var user = BasicController.User(username=userA, age=10);
 </script>
--->
+*/-->
 <!-- 자바스크립트 인라인 사용 후 -->
 <script th:inline="javascript">
     var username = [[${user.username}]];
@@ -38,7 +38,7 @@
     //객체
     var user = [[${user}]];
 </script>
-<!--
+<!--/*
 자바스크립트 인라인 사용 후 - 결과
 <script>
     var username = "userA";
@@ -48,19 +48,19 @@
     //객체
     var user = {"username":"userA","age":10};
 </script>
--->
+*/-->
 <!-- 자바스크립트 인라인 each -->
 <script th:inline="javascript">
     [# th:each="user, stat : ${users}"]
     var user[[${stat.count}]] = [[${user}]];
     [/]
 </script>
-<!-- 자바스크립트 인라인 each 결과
+<!--/* 자바스크립트 인라인 each 결과
 <script>
     var user1 = {"username":"userA","age":10};
     var user2 = {"username":"userB","age":20};
     var user3 = {"username":"userC","age":30};
 </script>
--->
+*/-->
 </body>
 </html>

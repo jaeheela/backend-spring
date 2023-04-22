@@ -1,11 +1,11 @@
 // 스프링 핵심 원리 기본편 - 2
 // 1. 객체 지향 설계와 스프링
 // 2. 스프링 핵심 원리 이해1 - 예제 만들기
-// => 프로젝트 생성, 비즈니스 요구사항과 설계, 회원 도메인 설계, 회원 도메인 개발 , 회원 도메인 실행과 테스트, 주문과 할인 도메인 설계 - 개발 - 실행과 테스트
+// => 프로젝트 생성, 비즈니스 요구사항과 설계, 회원 도메인 (설계-개발-실행과 테스트) 주문과 할인 도메인(설계-개발-실행과 테스트)
 // 3. 스프링 핵심 원리 이해2 - 객체 지향 원리 적용
-// => 새로운 할인 정책 개발, 새로운 할인 정책 적용과 문제점, 관심사의 분리, AppConfig 리팩터링, 새로운 구조와 할인 정책 적용, 전체 흐름 정리, IoC, DI, 그리고 컨테이너, 스프링으로 전환하기
+// => 새로운 할인 정책 개발, 새로운 할인 정책 적용과 문제점, 관심사의 분리, AppConfig 리팩터링, 새로운 구조와 할인 정책 적용, 전체 흐름 정리, 좋은 객체 지향 설계의 5가지 원칙의 적용, IoC, DI, 그리고 컨테이너, 스프링으로 전환하기
 // 4. 스프링 컨테이너와 스프링 빈
-// => 스프링 컨테이너 생성, 컨테이너에 등록된 모든 빈 조회, 스프링 빈 조회(기본, 동일한 타입이 둘 이상, 상속 관계), BeanFactory와 ApplicationContext, 다양한 설정 형식 지원-자바 코드,XML, BeanDefinition
+// => 스프링 컨테이너 생성, 컨테이너에 등록된 모든 빈 조회, 스프링 빈 조회(기본, 동일한 타입이 둘 이상, 상속 관계), BeanFactory와 ApplicationContext, 다양한 설정 형식 지원(자바 코드,XML), 스프링 빈 설정 메타 정보 (BeanDefinition)
 // 5. 싱글톤 컨테이너
 // => 웹 애플리케이션과 싱글톤, 싱글톤 패턴, 싱글톤 컨테이너, 싱글톤 방식의 주의점, @Configuration과 싱글톤, @Configuration과 바이트코드 조작의 마법
 // 6. 컴포넌트 스캔
@@ -142,12 +142,28 @@ group = 'hello'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+//lombok 설정 추가 시작
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+//lombok 설정 추가 끝
+
 repositories {
 	mavenCentral()
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
+
+	//lombok 라이브러리 추가 시작
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	//lombok 라이브러리 추가 끝
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

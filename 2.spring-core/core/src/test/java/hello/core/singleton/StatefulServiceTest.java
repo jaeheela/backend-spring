@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Bean;
 // => 사용자A의 주문금액은 10000원이 되어야 하는데, 20000원이라는 결과가 나왔다.
 // => 실무에서 이런 경우를 종종 보는데, 이로인해 정말 해결하기 어려운 큰 문제들이 터진다.(몇년에 한번씩 꼭 만난다.)
 // => 진짜 공유필드는 조심해야 한다! 스프링 빈은 항상 무상태(stateless)로 설계하자.
+
+// => 그런데 이상한점이 있다. 다음 AppConfig 코드를 보자. - @Configuration과 싱글톤
 public class StatefulServiceTest {
     @Test
     void statefulServiceSingleton() {
