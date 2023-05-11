@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        /* css 추가 : 이 부분은 오류 메시지를 빨간색으로 강조하기 위해 추가했다. */
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2 th:text="#{page.addItem}">상품 등록</h2>
+    </div>
+
+    <form action="item.html" th:action th:object="${item}" method="post">
+
+        <!-- 글로벌 오류 메시지 -->
+        <!-- => 오류 메시지는 errors 에 내용이 있을 때만 출력하면 된다. -->
+        <!-- => 타임리프의 th:if 를 사용하면 조건에 만족할 때만 해당 HTML 태그를 출력할 수 있다. -->
+        <div th:if="${errors?.containsKey('globalError')}">
+            <p class="field-error" th:text="${errors['globalError']}">전체 오류 메시지</p>
+        </div>
+
+        <div>
+            <!-- 참고 Safe Navigation Operator-->
+            <!-- => 만약 여기에서 errors 가 null 이라면 어떻게 될까? 생각해보면 등록폼에 진입한 시점에는 errors 가 없다. 따라서 errors.containsKey() 를 호출하는 순간 NullPointerException 이 발생한다.-->
+            <!-- => errors?. 은 errors 가 null 일때 NullPointerException 이 발생하는 대신, null 을 반환하는 문법이다.-->
+            <!-- => th:if 에서 null 은 실패로 처리되므로 오류 메시지가 출력되지 않는다.-->
+            <!-- => 이것은 스프링의 SpringEL이 제공하는 문법이다. 자세한 내용은 다음을 참고하자. : https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#expressions-operator-safe-navigation -->
+
+            <!--필드 오류 처리 : <input type="text" th:classappend="${errors?.containsKey('itemName')} ? 'field-error' : _" class="form-control">-->
+            <!-- => classappend 를 사용해서 해당 필드에 오류가 있으면 기존 클래스에 field-error 라는 클래스 정보를 더해서 폼의 색깔을 빨간색으로 강조한다. 만약 값이 없으면 _ (No-Operation)을 사용해서 아무것도 하지 않는다. -->
+            <!-- => 글로벌 오류 메시지에서 설명한 내용과 동일하고, 필드 오류를 대상으로 한다. 실행해서 상품 등록을 실행하고 검증이 잘 동작 하는지 확인해보자.-->
+            <!-- => http://localhost:8080/validation/v1/items/add -->
+            <label for="itemName" th:text="#{label.item.itemName}">상품명</label>
+            <input type="text" id="itemName" th:field="*{itemName}" th:class="${errors?.containsKey('itemName')} ? 'form-control field-error' : 'form-control'" class="form-control" placeholder="이름을 입력하세요">
+            <div class="field-error" th:if="${errors?.containsKey('itemName')}" th:text="${errors['itemName']}">
+                상품명 오류
+            </div>
+        </div>
+        <div>
+            <label for="price" th:text="#{label.item.price}">가격</label>
+            <input type="text" id="price" th:field="*{price}" th:class="${errors?.containsKey('price')} ? 'form-control field-error' : 'form-control'" class="form-control" placeholder="가격을 입력하세요">
+            <div class="field-error" th:if="${errors?.containsKey('price')}" th:text="${errors['price']}">
+                가격 오류
+            </div>
+        </div>
+
+        <div>
+            <label for="quantity" th:text="#{label.item.quantity}">수량</label>
+            <input type="text" id="quantity" th:field="*{quantity}" th:class="${errors?.containsKey('quantity')} ? 'form-control field-error' : 'form-control'" class="form-control" placeholder="수량을 입력하세요">
+            <div class="field-error" th:if="${errors?.containsKey('quantity')}" th:text="${errors['quantity']}">
+                수량 오류
+            </div>
+
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.save}">상품 등록</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg" onclick="location.href='items.html'" th:onclick="|location.href='@{/validation/v1/items}'|" type="button" th:text="#{button.cancel}">취소</button>
+            </div>
+        </div>
+
+    </form>
+
+</div> <!-- /container -->
+</body>
+</html>
