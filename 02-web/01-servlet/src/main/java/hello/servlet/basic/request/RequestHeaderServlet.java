@@ -12,10 +12,9 @@ import java.util.Enumeration;
 //HttpServletRequest - 개요
 
 //HttpServletRequest 역할
-// => HTTP 요청 메시지를 개발자가 직접 파싱해서 사용해도 되지만, 매우 불편할 것이다.
-// => 서블릿은 개발자가 HTTP 요청 메시지를 편리하게 사용할 수 있도록 개발자 대신에 HTTP 요청 메시지를 파싱한다.
-// => 그리고 그 결과를 HttpServletRequest 객체에 담아서 제공한다.
-// => HttpServletRequest를 사용하면 다음과 같은 HTTP 요청 메시지를 편리하게 조회할 수 있다.
+// => HTTP 요청 메시지를 개발자가 직접 파싱해서 사용해도 되지만, 매우 불편
+// => 서블릿은 개발자가 HTTP 요청 메시지를 편리하게 사용할 수 있도록 개발자 대신에 HTTP 요청 메시지를 파싱함 >> 파싱 결과를 HttpServletRequest 객체에 담아서 제공함
+// => HttpServletRequest를 사용하면 다음과 같은 HTTP 요청 메시지를 편리하게 조회 가능
 
 //HTTP 요청 메시지
 // => [START LINE] : HTTP 메소드 , URL , 쿼리 스트링 , 스키마, 프로토콜
@@ -30,21 +29,20 @@ import java.util.Enumeration;
 // => username=kim&age=20
 
 //HttpServletRequest 객체가 제공하는 부가기능
-//해당 HTTP 요청이 시작부터 끝날 때 까지 유지되는 임시 저장소 기능
+//임시 저장소 기능
+// => 해당 HTTP 요청이 시작부터 끝날 때 까지 유지됨
 // => 저장 : request.setAttribute(name, value)
 // => 조회 : request.getAttribute(name)
 //세션 관리 기능
 // => request.getSession(create: true)
 
 //중요
-// => HttpServletRequest, HttpServletResponse를 사용할 때 가장 중요한 점은
-// => 이 객체들이 HTTP 요청 메시지, HTTP 응답 메시지를 편리하게 사용하도록 도와주는 객체라는 점이다.
+// => HttpServletRequest, HttpServletResponse를 사용할 때 가장 중요한 점은 이 객체들이 HTTP 요청 메시지, HTTP 응답 메시지를 편리하게 사용하도록 도와주는 객체라는 점이다.
 // => 따라서 이 기능에 대해서 깊이있는 이해를 하려면 HTTP 스펙이 제공하는 요청, 응답 메시지 자체를 이해해야 한다.
+//참고
+// => 로컬에서 테스트하면 IPv6 정보가 나오는데, IPv4 정보를 보고 싶으면 다음 옵션을 VM options에 넣어주면 된다 → [-Djava.net.preferIPv4Stack=true]
 
-//HttpServletRequest - 기본사용법
-// => HttpServletRequest가 제공하는 기본 기능들을 알아보자.
-
-//http://localhost:8080/request-header?username=hello
+// => http://localhost:8080/request-header?username=hello
 @WebServlet(name = "requestHeaderServlet", urlPatterns = "/request-header")
 public class RequestHeaderServlet extends HttpServlet {
 
@@ -177,7 +175,3 @@ public class RequestHeaderServlet extends HttpServlet {
     }
 }
 
-//참고
-// => 로컬에서 테스트하면 IPv6 정보가 나오는데, IPv4 정보를 보고 싶으면 다음 옵션을 VM options에 넣어주면 된다. - [-Djava.net.preferIPv4Stack=true]
-// => 지금까지 HttpServletRequest를 통해서 HTTP 메시지의 start-line, header 정보 조회 방법을 이해했다.
-// => 이제 본격적으로 HTTP 요청 데이터를 어떻게 조회하는지 알아보자. - hello.request.RequestParamServlet.java

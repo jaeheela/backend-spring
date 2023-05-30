@@ -16,17 +16,20 @@ public class MyView {
         this.viewPath = viewPath;
     }
 
+    //v2
     public void render(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
         dispatcher.forward(request, response);
     }
 
+    //v3,v4,v5
     public void render(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         modelToRequestAttribute(model, request);
         RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
         dispatcher.forward(request, response);
     }
-
+    //v3,v4,v5
+    // => model에 담은 데이타를 request 속성값으로 넣어주는 메소드 -> 이걸해야 렌더링 가능
     private void modelToRequestAttribute(Map<String, Object> model, HttpServletRequest request) {
         model.forEach((key, value) -> request.setAttribute(key, value));
     }

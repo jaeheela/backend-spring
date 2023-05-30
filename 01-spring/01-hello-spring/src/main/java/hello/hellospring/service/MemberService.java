@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 //회원 서비스 개발
-
+// => test 자동 생성 단축키 : cmd + shift + T
 
 //AOP
 //AOP가 필요한 상황 : 공통 관심 사항(cross-cutting concern) vs 핵심 관심 사항(core concern)

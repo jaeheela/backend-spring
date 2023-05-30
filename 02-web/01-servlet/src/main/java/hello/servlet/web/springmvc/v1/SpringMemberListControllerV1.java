@@ -13,6 +13,7 @@ public class SpringMemberListControllerV1 {
 
     private final MemberRepository memberRepository = MemberRepository.getInstance();
 
+    // => 목록 실행 : http://localhost:8080/springmvc/v1/members
     @RequestMapping("/springmvc/v1/members")
     public ModelAndView process() {
 

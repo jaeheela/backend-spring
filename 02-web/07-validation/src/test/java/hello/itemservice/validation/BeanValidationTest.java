@@ -8,18 +8,15 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
-
+// BeanValidationTest
+// => 스프링과 통합하지 않고, 순수한 Bean Validation 사용법
 public class BeanValidationTest {
 
     @Test
     void beanValidation() {
-
-        //검증기 생성
-        // => 다음 코드와 같이 검증기를 생성한다.
-        // => 이후 스프링과 통합하면 우리가 직접 이런 코드를 작성하지는 않으므로, 이렇게 사용하는구나 정도만 참고하자.
+        //검증기 생성 (참고용 : 스프링과 통합하면 우리가 직접 이런 코드를 작성하지는 않으므로, 이렇게 사용하는구나 정도만 참고)
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-
 
         Item item = new Item();
         item.setItemName(" "); //공백
@@ -27,26 +24,21 @@ public class BeanValidationTest {
         item.setQuantity(10000);
 
         //검증 실행
-        // => 검증 대상( item )을 직접 검증기에 넣고 그 결과를 받는다.
-        // => Set 에는 ConstraintViolation 이라는 검증 오류가 담긴다.
+        // => 검증 대상(item)을 직접 검증기에 넣고 그 결과를 받는다. Set에는 ConstraintViolation 이라는 검증 오류가 담긴다.
         // => 따라서 결과가 비어있으면 검증 오류가 없는 것이다.
         Set<ConstraintViolation<Item>> violations = validator.validate(item);
         for (ConstraintViolation<Item> violation : violations) {
             System.out.println("violation = " + violation);
             System.out.println("violation = " + violation.getMessage());
         }
+        //violation = ConstraintViolationImpl{interpolatedMessage='1000에서 1000000 사이여야 합니다', propertyPath=price, rootBeanClass=class hello.itemservice.domain.item.Item, messageTemplate='{org.hibernate.validator.constraints.Range.message}'}
+        //violation = 1000에서 1000000 사이여야 합니다
+        //violation = ConstraintViolationImpl{interpolatedMessage='공백일 수 없습니다', propertyPath=itemName, rootBeanClass=class hello.itemservice.domain.item.Item, messageTemplate='{javax.validation.constraints.NotBlank.message}'}
+        //violation = 공백일 수 없습니다
+        //violation = ConstraintViolationImpl{interpolatedMessage='9999 이하여야 합니다', propertyPath=quantity, rootBeanClass=class hello.itemservice.domain.item.Item, messageTemplate='{javax.validation.constraints.Max.message}'}
+        //violation = 9999 이하여야 합니다
 
     }
-
-    //실행 결과 (일부 생략)
-    // => violation={interpolatedMessage='공백일 수 없습니다', propertyPath=itemName, rootBeanClass=class hello.itemservice.domain.item.Item, messageTemplate='{javax.validation.constraints.NotBlank.message}'}
-    // => violation.message=공백일 수 없습니다
-    // => violation={interpolatedMessage='9999 이하여야 합니다', propertyPath=quantity, rootBeanClass=class hello.itemservice.domain.item.Item, messageTemplate='{javax.validation.constraints.Max.message}'}
-    // => violation.message=9999 이하여야 합니다
-    // => violation={interpolatedMessage='1000에서 1000000 사이여야 합니다', propertyPath=price, rootBeanClass=class hello.itemservice.domain.item.Item, messageTemplate='{org.hibernate.validator.constraints.Range.message}'}
-    // => violation.message=1000에서 1000000 사이여야 합니다
-    // ...
-
     // => ConstraintViolation 출력 결과를 보면, 검증 오류가 발생한 객체, 필드, 메시지 정보등 다양한 정보를 확인할 수 있다.
     //정리
     // => 이렇게 빈 검증기(Bean Validation)를 직접 사용하는 방법을 알아보았다.

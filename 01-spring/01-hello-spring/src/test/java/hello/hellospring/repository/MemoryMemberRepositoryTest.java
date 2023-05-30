@@ -6,11 +6,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 //회원 리포지토리 메모리 구현체 테스트
 
+//회원 리포지토리 테스트 케이스 작성
+// => 개발한 기능을 실행해서 테스트 할 때 자바의 main 메서드를 통해서 실행하거나, 웹 애플리케이션의 컨트롤러를 통해서 해당 기능을 실행한다.
+// => 이러한 방법은 준비하고 실행하는데 오래 걸리고, 반복 실행하기 어렵고 여러 테스트를 한번에 실행하기 어렵다는 단점이 있다.
+// => 자바는 JUnit이라는 프레임워크로 테스트를 실행해서 이러한 문제를 해결한다.
+
 //테스트 케이스 작성 팁
-// => 작품을 만들기 전에 검증할 수 있는 틀을 먼저 만들 수도 있음 - 테스트주도개발
-// => 테스트가 한개면 모르지만 수백개라면? 나중에 빌드하거나, gradlew 띄우고 테스트하면 테스트를 자동으로 돌려줌
+// => 작품을 만들기 전에 검증할 수 있는 틀을 먼저 만들 수도 있음 - 테스트주도개발(TDD)
+// => 테스트가 한개면 모르지만 수백개라면? - 나중에 빌드하거나, gradlew 띄우고 테스트하면 테스트를 자동으로 돌려줌
 class MemoryMemberRepositoryTest {
 
     MemoryMemberRepository repository = new MemoryMemberRepository();
@@ -48,7 +55,7 @@ class MemoryMemberRepositoryTest {
         //Actual   :null - 실제값은 null이 들어왔어!
 
         //Assertions.assertThat(result).isEqualTo(null);
-        Assertions.assertThat(result).isEqualTo(member);
+        assertThat(result).isEqualTo(member); //option + enter : static import
     }
 
     @Test
@@ -66,7 +73,7 @@ class MemoryMemberRepositoryTest {
         Member result=repository.findByName("spring1").get();
 
         //then (결과)
-        Assertions.assertThat(result).isEqualTo(member1);
+        assertThat(result).isEqualTo(member1);
         //Assertions.assertThat(result).isEqualTo(member2);
 
     }
@@ -85,7 +92,7 @@ class MemoryMemberRepositoryTest {
         List<Member> result= repository.findAll();
 
         //then (결과)
-        Assertions.assertThat(result.size()).isEqualTo(2);
+        assertThat(result.size()).isEqualTo(2);
         //Assertions.assertThat(result.size()).isEqualTo(3);
     }
 

@@ -6,18 +6,22 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-//스프링은 검증을 체계적으로 제공하기 위해 다음 인터페이스를 제공한다.
-// => public interface Validator { boolean supports(Class<?> clazz); void validate(Object target, Errors errors); }
-// => supports() {} > 해당 검증기를 지원하는 여부 확인(뒤에서 설명)
-// => validate(Object target, Errors errors) : 검증 대상 객체와 BindingResult
+
+
 @Component
 public class ItemValidator implements Validator {
+    //스프링이 제공하는 Validator 인터페이스 - 검증을 체계적으로 제공함
 
+    //해당 검증기를 지원하는 여부 확인
+    // => 여러 검증기를 등록 시 그 중에 어떤 검증기가 실행되어야 할지 구분이 필요하다. 이때 supports() 가 사용된다.
+    // => supports(Item.class) 호출 >> 결과 true >> ItemValidator의 validate() 호출
     @Override
     public boolean supports(Class<?> clazz) {
         return Item.class.isAssignableFrom(clazz);
     }
 
+    //validate(Object target, Errors errors)
+    // => target객체 : 검증대상 객체, errors객체(부모): BindingResult(자식객체)
     @Override
     public void validate(Object target, Errors errors) {
         Item item = (Item) target;

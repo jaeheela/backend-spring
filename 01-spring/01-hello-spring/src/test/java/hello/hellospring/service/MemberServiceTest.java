@@ -14,25 +14,23 @@ import static org.junit.jupiter.api.Assertions.*;
 //=> 통합테스트를 자주 하는 것 보다는 단위테스트를 잘 만드는 것이 훨씬 더 좋음
 class MemberServiceTest {
 
+    //방법1. 직접 생성
     //MemberService memberService = new MemberService();
     //MemoryMemberRepository memberRepository = new MemoryMemberRepository();
 
+    //방법2. MemberService에서 생성자를 통해 memberRepository 주입받음
     MemberService memberService;
     MemoryMemberRepository memberRepository;
-
-    //@BeforeEach 어노테이션
-    // => 각 테스트 실행 전에 호출된다. 테스트가 서로 영향이 없도록 항상 새로운 객체를 생성하고, 의존관계도 새로 맺어준다
-    @BeforeEach
+    @BeforeEach //@BeforeEach: 각 테스트 실행 전에 호출
     public void beforeEach(){
-        memberRepository=new MemoryMemberRepository();
-        memberService=new MemberService(memberRepository);
+        memberRepository=new MemoryMemberRepository(); //테스트가 서로 영향이 없도록 항상 새로운 객체를 생성해,
+        memberService=new MemberService(memberRepository); //의존관계 새로 맺어줌
     }
 
-    //@AfterEach 어노테이션
-    // => 각 테스트가 종료될 때 마다 이 기능을 실행한다. 여기서는 메모리 DB에 저장된 데이터를 삭제한다.
-    @AfterEach
+
+    @AfterEach //@AfterEach : 각 테스트가 종료될 때 마다 실행
     public void afterEach(){
-        memberRepository.clearStore();
+        memberRepository.clearStore(); //메모리 DB에 저장된 데이터를 삭제
     }
 
     @Test

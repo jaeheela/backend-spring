@@ -12,8 +12,7 @@
 // => 프론트 컨트롤러 패턴 소개
 // => 프론트 컨트롤러 도입 - v1 , View 분리 - v2 , Model 추가 - v3 , 단순하고 실용적인 컨트롤러 - v4 , 유연한 컨트롤러1 - v5, 유연한 컨트롤러2 - v5
 //5. 스프링 MVC - 구조 이해
-// => 스프링 MVC 전체 구조,핸들러 매핑과 핸들러 어댑터, 뷰 리졸버, 스프링 MVC (시작하기 , 컨트롤러 통합 , 실용적인 방식)
-
+// => 스프링 MVC 전체 구조, 핸들러 매핑과 핸들러 어댑터, 뷰 리졸버, 스프링 MVC (시작하기 , 컨트롤러 통합 , 실용적인 방식)
 
 //웹 어플리케이션 이해
 //모든 것이 HTTP
@@ -207,7 +206,6 @@
 // 3. 임의의 테스트 클래스를 만들고 @Getter, @Setter 확인
 
 // Postman 다운 및 설치: https://www.postman.com/downloads
-//Hello 서블릿 부터 시작! - hello.servlet.ServletApplication.java로 이동
 
 plugins {
 	id 'org.springframework.boot' version '2.4.3'

@@ -4,7 +4,38 @@
 <%@ page import="hello.servlet.domain.member.MemberRepository" %>
 <%--회원 목록 JSP--%>
 <%--회원 리포지토리를 먼저 조회하고, 결과 List를 사용해서 중간에 <tr><td> HTML 태그를 반복해서 출력하고 있다.--%>
+<%
+    MemberRepository memberRepository = MemberRepository.getInstance();
+    List<Member> members = memberRepository.findAll();
+%>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="/index.html">메인</a>
+<table>
+    <thead>
+    <th>id</th>
+    <th>username</th>
+    <th>age</th>
+    </thead>
+    <tbody>
+    <%
+        for (Member member : members) {
+            out.write("    <tr>");
+            out.write("        <td>" + member.getId() + "</td>");
+            out.write("        <td>" + member.getUsername() + "</td>");
+            out.write("        <td>" + member.getAge() + "</td>");
+            out.write("    </tr>");
+        }
+    %>
+    </tbody>
+</table>
 
+</body>
+</html>
 <%--서블릿과 JSP의 한계--%>
 <%--서블릿으로 개발할 때는 뷰(View)화면을 위한 HTML을 만드는 작업이 자바 코드에 섞여서 지저분하고 복잡했다.--%>
 <%--JSP를 사용한 덕분에 뷰를 생성하는 HTML 작업을 깔끔하게 가져가고, 중간중간 동적으로 변경이 필요한 부분에만 자바 코드를 적용했다. --%>
@@ -44,35 +75,3 @@
 <%--그리고 컨트롤러는 비즈니스 로직이 있는 서비스를 호출하는 역할을 담당한다.--%>
 <%--참고로 비즈니스 로직을 변경하면 비즈니스 로직을 호출하는 컨트롤러의 코드도 변경될 수 있다. --%>
 <%--앞에서는 이해를 돕기 위해 비즈니스 로직을 호출한다는 표현 보다는, 비즈니스 로직이라 설명했다--%>
-<%
-    MemberRepository memberRepository = MemberRepository.getInstance();
-    List<Member> members = memberRepository.findAll();
-%>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<a href="/index.html">메인</a>
-<table>
-    <thead>
-    <th>id</th>
-    <th>username</th>
-    <th>age</th>
-    </thead>
-    <tbody>
-    <%
-        for (Member member : members) {
-            out.write("    <tr>");
-            out.write("        <td>" + member.getId() + "</td>");
-            out.write("        <td>" + member.getUsername() + "</td>");
-            out.write("        <td>" + member.getAge() + "</td>");
-            out.write("    </tr>");
-        }
-    %>
-    </tbody>
-</table>
-
-</body>
-</html>

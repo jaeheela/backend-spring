@@ -47,7 +47,7 @@ public class MemberController {
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
         //CG 라이브러리를 이용해서 memberService 객체를 가지고 복제해서 조작하는 기술 이용함 - 프록시 , AOP
-        //System.out.println("memberServie = "+ memberService.getClass()); //memberServie = class hello.hellospring.service.MemberService$$EnhancerBySpringCGLIB$$a8c2c0c2
+        System.out.println("memberServie = "+ memberService.getClass()); //memberServie = class hello.hellospring.service.MemberService$$EnhancerBySpringCGLIB$$a8c2c0c2
     }
 
     //회원 등록 컨트롤러 - 회원 등록 폼 HTML 요청

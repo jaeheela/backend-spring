@@ -7,16 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 //step2.
-// 스프링 부트 환경에서 서블릿 등록하기 - hello.servlet.basic.HelloServlet
+// 스프링 부트 환경에서 서블릿 등록
 
-//HTTP 요청 메시지 로그로 확인하는 법 - application.properties 파일에 추가 >> 서버 재시작 후 요청 >> 서버가 받은 HTTP 요청 메시지도 출력됨
-//=> [logging.level.org.apache.coyote.http11=debug] 내용 추가
+//HTTP 요청 메시지 로그로 확인하는 법
+// => application.properties 파일 : [logging.level.org.apache.coyote.http11=debug] 내용 추가 >> 서버 재시작 후 요청 >> 서버가 받은 HTTP 요청 메시지도 출력됨
 // => 주의) 운영서버에 이렇게 모든 요청 정보를 다 남기면 성능저하 발생 가능, 개발 단계에서만 적용하기
-
-//웹 브라우저 실행 : http://localhost:8080/hello?username=world
-// => 웹 브라우저 결과 : hello world
-// => 콘솔실행 결과
-// => 서버가 받은 HTTP 요청 메시지
+// => 서버가 받은 HTTP 요청 메시지 확인
 //Host: localhost:8080
 //Connection: keep-alive
 //sec-ch-ua: "Google Chrome";v="111", "Not(A:Brand";v="8", "Chromium";v="111"
@@ -34,11 +30,15 @@ import java.io.IOException;
 //Cookie: Idea-4bbb167b=a36200a3-ec12-4380-838b-e9f6e828ed89; Idea-3a450657=3afb1f52-af87-447c-ad3d-33520aa3acbf; JSESSIONID=2BF9181E9170D78740A4AA9D74BF8C2E
 //
 //]
-// => request, response, parameter 출력
-//HelloServlet.service
-//request = org.apache.catalina.connector.RequestFacade@74f7eaa2
-//response = org.apache.catalina.connector.ResponseFacade@660829cd
-//username = world
+
+// 웹 브라우저 실행
+// => 실행 : http://localhost:8080/hello?username=world
+// => 결과 : hello world
+// => 콘솔실행 결과 :
+// HelloServlet.service
+// request = org.apache.catalina.connector.RequestFacade@5e4e72
+// response = org.apache.catalina.connector.ResponseFacade@37d112b6
+// username = world
 
 //서블릿 컨테이너 동작 방식
 // => 1. 스프링 부트가 실행되면서 스프링 부트가 내장 톰캣 서버를 생성해줌
@@ -52,13 +52,14 @@ import java.io.IOException;
 // => 7. 메소드가 종료되면 WAS 서버가 HttpServletResponse 객체 정보로 HTTP 응답을 생성해 웹브라우저에게 응답함
 // => HTTP/1.1 200 OK
 // => Content-Type : text/plain;charse=utf-8
-// => Content-Length: 11 (웹 애플리케이션 서버가 자동으로 생성해줌)
+// => Content-Length: 11 (참고로!!! Content-Length는 웹 애플리케이션 서버가 자동으로 생성해줌)
 // => hello world
 // => 8. 웹브라우저에는 hello world가 출력됨
 
 //@WebServlet : 서블릿 애노테이션 (name속성: 서블릿 이름 , urlPatterns속성: URL 매핑)
 @WebServlet(name = "helloServlet", urlPatterns = "/hello")
 public class HelloServlet extends HttpServlet {
+
     //HTTP 요청을 통해 매핑된 URL이 호출되면
     // => 서블릿 컨테이너는 protected void service(HttpServletRequest request, HttpServletResponse response) 메서드 실행함
     @Override

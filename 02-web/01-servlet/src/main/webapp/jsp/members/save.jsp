@@ -10,7 +10,8 @@
 <%-- <% ~ %> 를 사용해서 HTML 중간에 자바 코드를 출력하고 있다.--%>
 
 <%
-    //request, response 사용 가능
+    //request, response 그냥 사용 가능
+    // => 서븧릿으로 자동으로 변환되기 때문
     MemberRepository memberRepository = MemberRepository.getInstance();
 
     System.out.println("MemberSaveServlet.service");

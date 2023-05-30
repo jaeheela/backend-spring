@@ -57,6 +57,8 @@ public class MessageItemController {
     // => LocaleResolver 인터페이스 : public interface LocaleResolver { Locale resolveLocale(HttpServletRequest request); void setLocale(HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Locale locale); }
     // => LocaleResolver 변경 : 만약 Locale 선택 방식을 변경하려면 LocaleResolver 의 구현체를 변경해서 쿠키나 세션 기반의 Locale 선택 기능을 사용할 수 있다.
     // => 예를 들어서 고객이 직접 Locale을 선택하도록 하는 것이다. 관련해서 LocaleResolver 를 검색하면 수 많은 예제가 나오니 필요한 분들은 참고하자.
+
+    // => http://localhost:8080/message/items
     @GetMapping
     public String items(Model model) {
         List<Item> items = itemRepository.findAll();
@@ -64,6 +66,7 @@ public class MessageItemController {
         return "message/items";
     }
 
+    // => http://localhost:8080/message/items/{itemId}
     @GetMapping("/{itemId}")
     public String item(@PathVariable long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
@@ -71,6 +74,7 @@ public class MessageItemController {
         return "message/item";
     }
 
+    // => http://localhost:8080/message/items/add
     @GetMapping("/add")
     public String addForm(Model model) {
         model.addAttribute("item", new Item());
@@ -85,6 +89,7 @@ public class MessageItemController {
         return "redirect:/message/items/{itemId}";
     }
 
+    // => http://localhost:8080/message/items/{itemId}/edit
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {
         Item item = itemRepository.findById(itemId);

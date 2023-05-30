@@ -9,10 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-//HttpServletResponse 객체의 개요
 //HttpServletResponse 역할
-// => HTTP 응답 메시지 생성 : HTTP 응답코드 지정(2XX,4XX,5XX), 헤더 생성, 바디 생성
-// => 편의 기능 제공 : Content-Type - content(response), 쿠키 - cookie(response), Redirect - (response)
+//1.
+//HTTP 응답 메시지 생성
+// => HTTP 응답코드 지정(2XX,4XX,5XX)
+// => 헤더 생성
+// => 바디 생성
+//2.
+// 편의 기능 제공
+// => Content-Type - content(response)
+// => 쿠키 - cookie(response)
+// => Redirect - (response)
 
 //HTTP 응답 데이터 - 단순 텍스트
 //HttpServletResponse 제공하는 기본 기능들을 출력하는 서블릿

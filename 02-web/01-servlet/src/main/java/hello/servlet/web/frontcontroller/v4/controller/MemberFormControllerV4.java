@@ -9,6 +9,7 @@ public class MemberFormControllerV4 implements ControllerV4 {
 
     @Override
     public String process(Map<String, String> paramMap, Map<String, Object> model) {
+        //String으로만 반환하면 끝!
         return "new-form";
     }
 }
