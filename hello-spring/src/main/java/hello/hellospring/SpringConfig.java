@@ -28,7 +28,7 @@ public class SpringConfig {
         this.memberRepository = memberRepository;
     }
 
-    @Bean
+//    @Bean
     public TimeTraceAop timeTraceAop() {
         return new TimeTraceAop();
     }
